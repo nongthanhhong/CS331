@@ -23,6 +23,6 @@ class ClassificationNetwork(chainer.Chain):
             h = getattr(self, 'l{}'.format(i))(h)
 
             if i < len(self.num_output_list) - 1:
-                h = getattr(self, 'bn{}'.format(i))(h, test=test)
+                h = getattr(self, 'bn{}'.format(i))(h)
 
         return h

@@ -4,7 +4,6 @@ from typing import Tuple
 import chainer
 import numpy
 
-
 class HistogramNetwork(chainer.Chain):
     def __init__(
             self,
@@ -42,7 +41,7 @@ class HistogramNetwork(chainer.Chain):
         batchsize, channel, x, y = h.shape
 
         xp = self.xp
-        if self._cpu:
+        if not chainer.cuda.available:
             h = chainer.cuda.to_cpu(h)
         else:
             h = chainer.cuda.to_gpu(h)
@@ -80,5 +79,5 @@ class HistogramNetwork(chainer.Chain):
         h = h.astype(self.dtype)
         h = h.reshape((batchsize, -1))
 
-        h = chainer.Variable(h, volatile=test)
+        h = chainer.Variable(h)
         return h
