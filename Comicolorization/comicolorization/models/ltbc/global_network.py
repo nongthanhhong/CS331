@@ -47,13 +47,13 @@ class GlobalNetwork(chainer.Chain):
     def __call__(self, x, test=False):
         # type: (any, bool) -> any
         h = x
-        h = chainer.functions.relu(self.bn1_1(self.conv1_1(h)))
-        h = chainer.functions.relu(self.bn1_2(self.conv1_2(h)))
-        h = chainer.functions.relu(self.bn2_1(self.conv2_1(h)))
-        h = chainer.functions.relu(self.bn2_2(self.conv2_2(h)))
-        h = chainer.functions.relu(self.bn3_1(self.l3_1(h)))
-        h = h_for_classification = chainer.functions.relu(self.bn3_2(self.l3_2(h)))
-        h = chainer.functions.relu(self.bn3_3(self.l3_3(h)))
+        h = chainer.functions.relu(self.bn1_1(self.conv1_1(h), test=test))
+        h = chainer.functions.relu(self.bn1_2(self.conv1_2(h), test=test))
+        h = chainer.functions.relu(self.bn2_1(self.conv2_1(h), test=test))
+        h = chainer.functions.relu(self.bn2_2(self.conv2_2(h), test=test))
+        h = chainer.functions.relu(self.bn3_1(self.l3_1(h), test=test))
+        h = h_for_classification = chainer.functions.relu(self.bn3_2(self.l3_2(h), test=test))
+        h = chainer.functions.relu(self.bn3_3(self.l3_3(h), test=test))
 
         if not self.use_classification:
             return h

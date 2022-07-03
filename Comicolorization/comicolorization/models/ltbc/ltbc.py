@@ -98,35 +98,35 @@ class Ltbc(BaseModel):
             x_global = x
 
         h = x
-        h = self.low_level(h)
-        h = self.mid_level(h)
+        h = self.low_level(h, test=test)
+        h = self.mid_level(h, test=test)
 
         h_classification = None
 
         one_dimension_feature_list = []
         if self.use_global:
             h_global = x_global
-            h_global = self.low_level(h_global)
+            h_global = self.low_level(h_global, test=test)
 
             if not self.use_classification:
-                h_global = self.global_network(h_global)
+                h_global = self.global_network(h_global, test=test)
             else:
-                h_global, h_for_classification = self.global_network(h_global)
-                h_classification = self.classification_network(h_for_classification)
+                h_global, h_for_classification = self.global_network(h_global, test=test)
+                h_classification = self.classification_network(h_for_classification, test=test)
 
             one_dimension_feature_list.append(h_global)
 
         if self.use_histogram:
             if x_histogram is None:
-                h_histogram = self.histogram_network(x_rgb)
+                h_histogram = self.histogram_network(x_rgb, test=test)
             else:
                 h_histogram = chainer.Variable(self.xp.array(x_histogram.reshape((x.shape[0], -1))))
             one_dimension_feature_list.append(h_histogram)
 
         if self.use_global or self.use_histogram:
-            h = self.fusion_layer(h=h, one_dimension_feature_list=one_dimension_feature_list)
+            h = self.fusion_layer(h=h, one_dimension_feature_list=one_dimension_feature_list, test=test)
 
-        h = self.colorization(h)
+        h = self.colorization(h, test=test)
         h = h_before_sigmoid = chainer.functions.unpooling_2d(h, ksize=2, cover_all=False)
 
         in_min = (0, 0, 0)
@@ -139,7 +139,7 @@ class Ltbc(BaseModel):
         }
 
     def generate_rgb_image(self, gray_images_array, rgb_images_array=None, histogram_array=None):
-        color_images_array = self(gray_images_array, x_rgb=rgb_images_array, x_histogram=histogram_array)
+        color_images_array = self(gray_images_array, x_rgb=rgb_images_array, x_histogram=histogram_array, test=True)
 
         color_images_array = color_images_array[0]
 

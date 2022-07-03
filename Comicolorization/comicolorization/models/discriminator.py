@@ -27,8 +27,8 @@ class Discriminator(chainer.Chain):
     def __call__(self, x, test=False):
         h = self.first_pooling(x)
         h = chainer.functions.relu(self.c0(h))
-        h = chainer.functions.relu(self.bn1(self.c1(h)))
-        h = chainer.functions.relu(self.bn2(self.c2(h)))
-        h = chainer.functions.relu(self.bn3(self.c3(h)))
+        h = chainer.functions.relu(self.bn1(self.c1(h), test=test))
+        h = chainer.functions.relu(self.bn2(self.c2(h), test=test))
+        h = chainer.functions.relu(self.bn3(self.c3(h), test=test))
         l = self.l0z(h)
         return l

@@ -68,34 +68,34 @@ class Unet(BaseModel):
         relu = chainer.functions.relu
         concat = chainer.functions.concat
 
-        e0 = relu(self.bnc0(self.c0(x)))
-        e1 = relu(self.bnc1(self.c1(e0)))
-        e2 = relu(self.bnc2(self.c2(e1)))
+        e0 = relu(self.bnc0(self.c0(x), test=test))
+        e1 = relu(self.bnc1(self.c1(e0), test=test))
+        e2 = relu(self.bnc2(self.c2(e1), test=test))
         del e1
-        e3 = relu(self.bnc3(self.c3(e2)))
-        e4 = relu(self.bnc4(self.c4(e3)))
+        e3 = relu(self.bnc3(self.c3(e2), test=test))
+        e4 = relu(self.bnc4(self.c4(e3), test=test))
         del e3
-        e5 = relu(self.bnc5(self.c5(e4)))
-        e6 = relu(self.bnc6(self.c6(e5)))
+        e5 = relu(self.bnc5(self.c5(e4), test=test))
+        e6 = relu(self.bnc6(self.c6(e5), test=test))
         del e5
-        e7 = relu(self.bnc7(self.c7(e6)))
-        e8 = relu(self.bnc8(self.c8(e7)))
+        e7 = relu(self.bnc7(self.c7(e6), test=test))
+        e8 = relu(self.bnc8(self.c8(e7), test=test))
 
-        d8 = relu(self.bnd8(self.dc8(concat([e7, e8]))))
+        d8 = relu(self.bnd8(self.dc8(concat([e7, e8])), test=test))
         del e7, e8
-        d7 = relu(self.bnd7(self.dc7(d8)))
+        d7 = relu(self.bnd7(self.dc7(d8), test=test))
         del d8
-        d6 = relu(self.bnd6(self.dc6(concat([e6, d7]))))
+        d6 = relu(self.bnd6(self.dc6(concat([e6, d7])), test=test))
         del d7, e6
-        d5 = relu(self.bnd5(self.dc5(d6)))
+        d5 = relu(self.bnd5(self.dc5(d6), test=test))
         del d6
-        d4 = relu(self.bnd4(self.dc4(concat([e4, d5]))))
+        d4 = relu(self.bnd4(self.dc4(concat([e4, d5])), test=test))
         del d5, e4
-        d3 = relu(self.bnd3(self.dc3(d4)))
+        d3 = relu(self.bnd3(self.dc3(d4), test=test))
         del d4
-        d2 = relu(self.bnd2(self.dc2(concat([e2, d3]))))
+        d2 = relu(self.bnd2(self.dc2(concat([e2, d3])), test=test))
         del d3, e2
-        d1 = relu(self.bnd1(self.dc1(d2)))
+        d1 = relu(self.bnd1(self.dc1(d2), test=test))
         del d2
         d0 = self.dc0(concat([e0, d1]))
 

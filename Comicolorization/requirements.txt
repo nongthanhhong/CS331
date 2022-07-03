@@ -1,4 +1,4 @@
-chainer
+chainer >= 1.14 , < 2.0.0
 pillow
 numpy
 argparse

@@ -40,7 +40,7 @@ class SimpleConvolution(BaseModel):
 
     def generate_rgb_image(self, gray_images_array, **kwargs):
         # type: (any, numpy.ndarray, **any) -> any
-        color_images_array = self(gray_images_array).data
+        color_images_array = self(gray_images_array, test=True).data
         images = array_to_image(
             color_images_array,
             gray_images_array=gray_images_array,

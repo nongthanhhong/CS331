@@ -21,7 +21,7 @@ def to_variable(elem, device=None, volatile='auto'):
     elif isinstance(elem, chainer.Variable):
         pass
     else:
-        elem = chainer.Variable(elem)
+        elem = chainer.Variable(elem, volatile=volatile)
 
     to_device(elem, device)
     return elem
