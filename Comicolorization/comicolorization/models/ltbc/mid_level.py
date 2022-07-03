@@ -23,6 +23,6 @@ class MidLevelNetwork(chainer.Chain):
     def __call__(self, x, test=False):
         # type: (any, bool) -> any
         h = x
-        h = chainer.functions.relu(self.bn1_1(self.conv1_1(h), test=test))
-        h = chainer.functions.relu(self.bn1_2(self.conv1_2(h), test=test))
+        h = chainer.functions.relu(self.bn1_1(self.conv1_1(h)))
+        h = chainer.functions.relu(self.bn1_2(self.conv1_2(h)))
         return h
