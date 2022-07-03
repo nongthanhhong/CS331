@@ -3,7 +3,6 @@ from typing import Tuple
 
 import chainer
 import numpy
-import cupy as cp
 
 class HistogramNetwork(chainer.Chain):
     def __init__(
@@ -62,8 +61,8 @@ class HistogramNetwork(chainer.Chain):
 
             else:
                 array = xp.empty(h_one.shape, numpy.int32)
-                for i, _range in zip(range(channel), self.ranges).get():
-                    array[i] = cp.asnumpy((h_one[i] - _range[0]) / (_range[1] - _range[0]) * self.num_bins)
+                for i, _range in zip(range(channel), self.ranges):
+                    array[i] = (h_one[i] - _range[0]) / (_range[1] - _range[0]) * self.num_bins
                     array[i] = xp.where(array[i] == self.num_bins, array[i] - 1, array[i])
 
                 array = array[0] * self.num_bins * self.num_bins + array[1] * self.num_bins + array[2]
