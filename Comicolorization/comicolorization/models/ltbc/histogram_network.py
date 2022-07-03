@@ -42,7 +42,7 @@ class HistogramNetwork(chainer.Chain):
         batchsize, channel, x, y = h.shape
 
         xp = self.xp
-        if self._cpu:
+        if not chainer.cuda.available:
             h = chainer.cuda.to_cpu(h)
         else:
             h = chainer.cuda.to_gpu(h)
