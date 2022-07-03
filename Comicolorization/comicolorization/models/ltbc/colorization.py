@@ -50,11 +50,11 @@ class ColorizationNetwork(chainer.Chain):
     def __call__(self, x, test=False):
         # type: (any, bool) -> any
         h = x
-        h = chainer.functions.relu(self.bn1_1(self.conv1_1(h), test=test))
+        h = chainer.functions.relu(self.bn1_1(self.conv1_1(h)))
         h = chainer.functions.unpooling_2d(h, ksize=2, cover_all=False)
-        h = chainer.functions.relu(self.bn2_1(self.conv2_1(h), test=test))
-        h = chainer.functions.relu(self.bn2_2(self.conv2_2(h), test=test))
+        h = chainer.functions.relu(self.bn2_1(self.conv2_1(h)))
+        h = chainer.functions.relu(self.bn2_2(self.conv2_2(h)))
         h = chainer.functions.unpooling_2d(h, ksize=2, cover_all=False)
-        h = chainer.functions.relu(self.bn3_1(self.conv3_1(h), test=test))
+        h = chainer.functions.relu(self.bn3_1(self.conv3_1(h)))
         h = chainer.functions.sigmoid(self.conv3_2(h))
         return h
