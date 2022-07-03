@@ -61,7 +61,7 @@ class HistogramNetwork(chainer.Chain):
                 histogram_one = xp.reshape(xp.concatenate(histogram_one, axis=0), (1, -1))
 
             else:
-                array = xp.empty(h_one.shape, numpy.int32).get()
+                array = xp.empty(h_one.shape, numpy.int32)
                 for i, _range in zip(range(channel), self.ranges):
                     array[i] = numpy.asarray((h_one[i] - _range[0]) / (_range[1] - _range[0]) * self.num_bins)
                     array[i] = xp.where(array[i] == self.num_bins, array[i] - 1, array[i])
